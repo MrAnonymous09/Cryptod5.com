@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto D5 Links-Finder</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(45deg, #ff6b6b, #6bff6b, #6b6bff, #ff6b6b);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s infinite alternate;
+        font-family: Arial, sans-serif;
+        background-color: aqua;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+
+      header {
+        width: 100%;
+        color: #840a0a;
+        padding: 10px 0;
+      }
+
+      h1 {
+        margin-top: 20px;
+      }
+
+      /* Style for the title link */
+      h1 a {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+      }
+
+      .navbar li {
+        list-style-type: none;
+        margin-right: 20px;
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: #1bd0a6;
+      }
+
+      .navbar a:hover {
+        color: #0056b3;
+      }
+
+      section {
+        padding: 20px;
+        flex: 1;
+      }
+
+      label {
+        display: block;
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .search-box {
+        width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+      }
+
+      .search-box::placeholder {
+        color: #777;
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      footer {
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 0;
+      }
+
+      /* Additional styles for the results section */
+      h2 {
+        color: #333;
+      }
+
+      ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+      }
+
+      li {
+        margin: 5px;
+        padding: 10px;
+        background-color: #ebeef1;
+        color: #fff;
+        border-radius: 10px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #007bff;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* Custom section styles */
+      .demo-section {
+        padding: 2px;
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+      }
+
+      .demo-text {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .demo-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      .demo-button {
+        margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 10px; /* Add rounded edges */
+            transition: background-color 0.3s;
+      }
+
+      .demo-button:hover {
+        background-color: #003d80;
+      }
+
+      .ptag{
+        
+        color: white; /* Set text color to white */
+    font-size: 20px; /* Adjust the font size to your preference */
+    line-height: 1.5; /* Set line height for readability */
+    margin: 10px 0; /* Add margin for spacing */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <h1><a href="/">Crypto D5 Links-Finder</a></h1>
+  </header>
+  <section>
+    <form method="post" action="/">
+      <br />
+      <input
+          type="text"
+          id="query"
+          name="query"
+          class="search-box"
+          placeholder="Enter your query:"
+          required
+        />
+      <button type="submit">Search</button>
+    </form>
+    <p class="ptag">Demo prompts for testing</p>
+      
+        <div class="demo-buttons">
+          <p class="demo-button">Hacking</p>
+          <p class="demo-button">Drugs</p>
+          <p class="demo-button">Carding</p>       
+  </section>
+  <p class="ptag" style="color: #ff0000; font-weight: bold; font-size: 18px;">
+    Note: To see this urls are working or not , you need to have the Tor browser (tor.exe) installed on your system. The website links are accessible only in the Tor browser.
+  </p>
+  <section>
+    {% if results %}
+        <h2>URLs:</h2>
+        <ul>
+            {% for url in results['first_20_urls'] %}
+                <li><a href="http://{{url}}" target="_blank">{{ url }}</a></li>
+            {% endfor %}
+        </ul>
+        <form method="post" action="{{ url_for('download') }}">
+            <input type="hidden" name="all_urls" value="{{ results['all_urls'] | join('\n') }}">
+            <button type="submit">Download All URLs</button>
+        </form>
+    {% endif %}
+  </section>  
+  <footer>
+    &copy; 2023 For Hackathon purposes, this site is dedicated to a
+    legitimate protocol and refrains from any illegal activities.
+  </footer>
+</body>
+</html>
